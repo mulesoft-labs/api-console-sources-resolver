@@ -4,18 +4,20 @@ const {ApiConsoleSourceOptions} = require('../lib/sources-options.js');
 const assert = require('chai').assert;
 
 describe('sources-options', () => {
-
   describe('validateOptions()', () => {
-    var options;
+    let options;
 
     describe('_validateOptionsList()', () => {
       beforeEach(function() {
         options = new ApiConsoleSourceOptions();
       });
 
-      it('Should pass a known option', function() {
+      it('Should pass known options', function() {
         options._validateOptionsList({
-          tagVersion: 'test'
+          tagVersion: 'test',
+          src: '/',
+          sourceIsZip: false,
+          ignoreCache: false
         });
         assert.isTrue(options.isValid);
       });
@@ -42,7 +44,7 @@ describe('sources-options', () => {
         assert.lengthOf(options.validationWarnings, 0);
       });
 
-      it('Should want for sourceIsZip and src not set', function() {
+      it('Should warn for sourceIsZip and src not set', function() {
         options._validateSourceOptions({
           sourceIsZip: true
         });
@@ -50,7 +52,7 @@ describe('sources-options', () => {
         assert.lengthOf(options.validationWarnings, 1);
       });
 
-      it('Should want for sourceIsZip and tagVersion set', function() {
+      it('Should warn for sourceIsZip and tagVersion set', function() {
         options._validateSourceOptions({
           sourceIsZip: true,
           tagVersion: 'v1'
@@ -87,7 +89,7 @@ describe('sources-options', () => {
   });
 
   describe('Default options', () => {
-    var options;
+    let options;
 
     before(function() {
       options = new ApiConsoleSourceOptions();
@@ -99,6 +101,10 @@ describe('sources-options', () => {
 
     it('Should set sourceIsZip default option', function() {
       assert.isFalse(options.sourceIsZip);
+    });
+
+    it('Should set ignoreCache default option', function() {
+      assert.isFalse(options.ignoreCache);
     });
   });
 });

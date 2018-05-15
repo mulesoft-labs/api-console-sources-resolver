@@ -1,6 +1,6 @@
 {
   "name": "api-console-sources-resolver",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A module to download Mulesoft's API console sources.",
   "main": "main.js",
   "scripts": {
@@ -26,8 +26,10 @@
   },
   "homepage": "https://github.com/mulesoft-labs/api-console-sources-resolver#readme",
   "devDependencies": {
-    "api-console-github-resolver": "^0.1.0",
+    "api-console-github-resolver": "mulesoft-labs/api-console-github-resolver#stable-release",
     "chai": "^3.5.0",
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1",
     "mocha": "^3.2.0"
   },
   "dependencies": {
