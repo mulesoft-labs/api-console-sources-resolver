@@ -14,9 +14,8 @@ describe('sources-options', () => {
 
       it('Should pass known options', function() {
         options._validateOptionsList({
-          tagVersion: 'test',
+          tagName: 'test',
           src: '/',
-          sourceIsZip: false,
           ignoreCache: false
         });
         assert.isTrue(options.isValid);
@@ -35,30 +34,13 @@ describe('sources-options', () => {
         options = new ApiConsoleSourceOptions();
       });
 
-      it('Should fail for src and tagVersion', function() {
+      it('Should fail for src and tagName', function() {
         options._validateSourceOptions({
           src: 'test',
-          tagVersion: 'v1'
+          tagName: 'v1'
         });
         assert.isFalse(options.isValid);
         assert.lengthOf(options.validationWarnings, 0);
-      });
-
-      it('Should warn for sourceIsZip and src not set', function() {
-        options._validateSourceOptions({
-          sourceIsZip: true
-        });
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 1);
-      });
-
-      it('Should warn for sourceIsZip and tagVersion set', function() {
-        options._validateSourceOptions({
-          sourceIsZip: true,
-          tagVersion: 'v1'
-        });
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 2);
       });
 
       it('Passes valid src', function() {
@@ -69,18 +51,9 @@ describe('sources-options', () => {
         assert.lengthOf(options.validationWarnings, 0);
       });
 
-      it('Passes valid tagVersion', function() {
+      it('Passes valid tagName', function() {
         options._validateSourceOptions({
-          tagVersion: 'test'
-        });
-        assert.isTrue(options.isValid);
-        assert.lengthOf(options.validationWarnings, 0);
-      });
-
-      it('Passes valid src and sourceIsZip', function() {
-        options._validateSourceOptions({
-          src: 'test',
-          sourceIsZip: true
+          tagName: 'test'
         });
         assert.isTrue(options.isValid);
         assert.lengthOf(options.validationWarnings, 0);
@@ -97,10 +70,6 @@ describe('sources-options', () => {
 
     it('Should not set src default option', function() {
       assert.isUndefined(options.src);
-    });
-
-    it('Should set sourceIsZip default option', function() {
-      assert.isFalse(options.sourceIsZip);
     });
 
     it('Should set ignoreCache default option', function() {
