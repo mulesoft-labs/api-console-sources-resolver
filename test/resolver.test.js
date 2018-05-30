@@ -6,15 +6,16 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 
 const logger = {
+  error: function() {},
   warn: function() {},
   info: function() {},
   log: function() {}
 };
 
-const zipUrl = 'https://github.com/mulesoft/api-console/archive/v4.0.0.zip';
+const zipUrl = 'https://github.com/mulesoft/api-console/archive/5.0.0-preview.zip';
 
 const tagInfo = {
-  tag_name: '4.0.0',
+  tag_name: '5.0.0-preview',
   zipball_url: 'test'
 };
 
@@ -159,7 +160,7 @@ describe('sources-resolver', () => {
     });
 
     it('Should copy sources to a destination', () => {
-      return resolver._downloadTagged('v4.0.0', dest)
+      return resolver._downloadTagged('v5.0.0', dest)
       .then(() => {
         return fs.pathExists(dest + 'api-console.html');
       })
@@ -231,7 +232,7 @@ describe('sources-resolver', () => {
 
     it('Should download tagged release', function() {
       let resolver = new ApiConsoleSources({
-        tagName: 'v4.0.0'
+        tagName: 'v5.0.0'
       }, githubResolver, githubTransport, logger);
       resolver = makeStub(resolver);
       resolver.sourcesTo();
