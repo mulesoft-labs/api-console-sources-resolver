@@ -6,15 +6,16 @@ const assert = require('chai').assert;
 const fs = require('fs-extra');
 
 const logger = {
+  error: function() {},
   warn: function() {},
   info: function() {},
   log: function() {}
 };
 
-const zipUrl = 'https://github.com/mulesoft/api-console/archive/v4.0.0.zip';
+const zipUrl = 'https://github.com/mulesoft/api-console/archive/5.0.0-preview.zip';
 
 const tagInfo = {
-  tag_name: '4.0.0',
+  tag_name: '5.0.0-preview',
   zipball_url: 'test'
 };
 
@@ -41,10 +42,10 @@ const githubTransport = {
 };
 
 describe('sources-resolver', () => {
-
   describe('constructor', () => {
     it('Should construct object', function() {
-      const sources = new ApiConsoleSources({}, githubResolver, githubTransport, logger);
+      const sources = new ApiConsoleSources({},
+        githubResolver, githubTransport, logger);
       assert.isOk(sources);
     });
 
@@ -59,15 +60,15 @@ describe('sources-resolver', () => {
 
   describe('_copyLocal()', () => {
     describe('Zip file', () => {
-      var resolver;
-      var options;
+      let resolver;
+      let options;
       const dest = 'test/build/';
       before(function() {
         options = {
-          sourceIsZip: true,
           src: 'test/test.zip'
         };
-        resolver = new ApiConsoleSources(options, githubResolver, githubTransport, logger);
+        resolver = new ApiConsoleSources(options,
+          githubResolver, githubTransport, logger);
       });
 
       afterEach(function() {
@@ -79,7 +80,7 @@ describe('sources-resolver', () => {
         .then(() => {
           return fs.pathExists(dest);
         })
-        .then(result => {
+        .then((result) => {
           assert.isTrue(result);
         });
       });
@@ -89,21 +90,22 @@ describe('sources-resolver', () => {
         .then(() => {
           return fs.pathExists(dest + '/api-console.html');
         })
-        .then(result => {
+        .then((result) => {
           assert.isTrue(result);
         });
       });
     });
 
     describe('Source folder', () => {
-      var resolver;
-      var options;
+      let resolver;
+      let options;
       const dest = 'test/build/';
       before(function() {
         options = {
           src: 'test/api-console'
         };
-        resolver = new ApiConsoleSources(options, githubResolver, githubTransport, logger);
+        resolver = new ApiConsoleSources(options,
+          githubResolver, githubTransport, logger);
       });
 
       afterEach(function() {
@@ -115,7 +117,7 @@ describe('sources-resolver', () => {
         .then(() => {
           return fs.pathExists(dest + 'api-console.html');
         })
-        .then(result => {
+        .then((result) => {
           assert.isTrue(result);
         });
       });
@@ -123,10 +125,11 @@ describe('sources-resolver', () => {
   });
 
   describe('_downloadLatest()', () => {
-    var resolver;
+    let resolver;
     const dest = 'test/build/';
     before(function() {
-      resolver = new ApiConsoleSources({}, githubResolver, githubTransport, logger);
+      resolver = new ApiConsoleSources({},
+        githubResolver, githubTransport, logger);
     });
 
     afterEach(function() {
@@ -138,17 +141,18 @@ describe('sources-resolver', () => {
       .then(() => {
         return fs.pathExists(dest + 'api-console.html');
       })
-      .then(result => {
+      .then((result) => {
         assert.isTrue(result);
       });
     });
   });
 
   describe('_downloadTagged()', () => {
-    var resolver;
+    let resolver;
     const dest = 'test/build/';
     before(function() {
-      resolver = new ApiConsoleSources({}, githubResolver, githubTransport, logger);
+      resolver = new ApiConsoleSources({},
+        githubResolver, githubTransport, logger);
     });
 
     afterEach(function() {
@@ -156,21 +160,22 @@ describe('sources-resolver', () => {
     });
 
     it('Should copy sources to a destination', () => {
-      return resolver._downloadTagged('v4.0.0', dest)
+      return resolver._downloadTagged('v5.0.0', dest)
       .then(() => {
         return fs.pathExists(dest + 'api-console.html');
       })
-      .then(result => {
+      .then((result) => {
         assert.isTrue(result);
       });
     });
   });
 
   describe('_downloadAny()', () => {
-    var resolver;
+    let resolver;
     const dest = 'test/build/';
     before(function() {
-      resolver = new ApiConsoleSources({}, githubResolver, githubTransport, logger);
+      resolver = new ApiConsoleSources({},
+        githubResolver, githubTransport, logger);
     });
 
     afterEach(function() {
@@ -183,14 +188,14 @@ describe('sources-resolver', () => {
       .then(() => {
         return fs.pathExists(dest + 'api-console.html');
       })
-      .then(result => {
+      .then((result) => {
         assert.isTrue(result);
       });
     });
   });
 
   describe('sourcesTo()', () => {
-    var stub = {
+    const stub = {
       _c1: false,
       _c2: false,
       _c3: false,
@@ -208,22 +213,26 @@ describe('sources-resolver', () => {
         this._c4 = true;
       }
     };
-
+    /**
+     * @param {Object} obj
+     * @return {Object}
+     */
     function makeStub(obj) {
       obj = Object.assign(obj, stub);
       return obj;
     }
 
     it('Should download latest release', function() {
-      var resolver = new ApiConsoleSources({}, githubResolver, githubTransport, logger);
+      let resolver = new ApiConsoleSources({},
+        githubResolver, githubTransport, logger);
       resolver = makeStub(resolver);
       resolver.sourcesTo();
       assert.isTrue(resolver._c1);
     });
 
     it('Should download tagged release', function() {
-      var resolver = new ApiConsoleSources({
-        tagVersion: 'v4.0.0'
+      let resolver = new ApiConsoleSources({
+        tagName: 'v5.0.0'
       }, githubResolver, githubTransport, logger);
       resolver = makeStub(resolver);
       resolver.sourcesTo();
@@ -231,7 +240,7 @@ describe('sources-resolver', () => {
     });
 
     it('Should download from any URL', function() {
-      var resolver = new ApiConsoleSources({
+      let resolver = new ApiConsoleSources({
         src: zipUrl
       }, githubResolver, githubTransport, logger);
       resolver = makeStub(resolver);
@@ -240,7 +249,7 @@ describe('sources-resolver', () => {
     });
 
     it('Should download from any URL', function() {
-      var resolver = new ApiConsoleSources({
+      let resolver = new ApiConsoleSources({
         src: 'test/test.zip'
       }, githubResolver, githubTransport, logger);
       resolver = makeStub(resolver);
