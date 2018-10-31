@@ -1,5 +1,5 @@
 {
-  "name": "api-console-sources-resolver",
+  "name": "@api-components/api-console-sources-resolver",
   "version": "1.0.2",
   "description": "A module to download Mulesoft's API console sources.",
   "main": "main.js",
