@@ -16,7 +16,9 @@ describe('sources-options', () => {
         options._validateOptionsList({
           tagName: 'test',
           src: '/',
-          ignoreCache: false
+          ignoreCache: false,
+          verbose: true,
+          logger: {}
         });
         assert.isTrue(options.isValid);
       });

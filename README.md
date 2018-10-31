@@ -1,6 +1,6 @@
 # api-console-sources-resolver
 
-[![Build Status](https://travis-ci.org/advanced-rest-client/api-console-sources-resolver.svg?branch=master)](https://travis-ci.org/advanced-rest-client/api-console-sources-resolver)
+[![Build Status](https://travis-ci.org/mulesoft-labs/api-console-sources-resolver.svg?branch=master)](https://travis-ci.org/mulesoft-labs/api-console-sources-resolver)
 
 An npm module to download / copy Mulesoft's API console to local location.
 
@@ -46,7 +46,7 @@ release information
 
 **transport** `Object` - Remote files downloader.
 
-**logger** `Object` - A logger class.
+**logger** `Object` - A logger class. **Deprecated** Use `opts.logger` instead.
 
 #### `sourcesTo(destination)`
 

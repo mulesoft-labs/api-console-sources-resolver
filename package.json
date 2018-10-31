@@ -20,13 +20,13 @@
     "sources"
   ],
   "author": "Pawel Psztyc, Advanced Rest Client Authors",
-  "license": "Apache-2.0 or CC-BY-4.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/mulesoft-labs/api-console-sources-resolver/issues"
   },
   "homepage": "https://github.com/mulesoft-labs/api-console-sources-resolver#readme",
   "devDependencies": {
-    "api-console-github-resolver": "mulesoft-labs/api-console-github-resolver#stable-release",
+    "@api-components/api-console-github-resolver": "^1.0.1",
     "chai": "^3.5.0",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
@@ -35,6 +35,7 @@
   "dependencies": {
     "fs-extra": "^3.0.0",
     "unzip": "^0.1.11",
+    "winston": "3.1.0",
     "tmp": "0.0.31"
   }
 }

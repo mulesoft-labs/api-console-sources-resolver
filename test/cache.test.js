@@ -7,7 +7,8 @@ const logger = {
   error: function() {},
   warn: function() {},
   info: function() {},
-  log: function() {}
+  log: function() {},
+  debug: function() {}
 };
 
 describe('console-cache', () => {
