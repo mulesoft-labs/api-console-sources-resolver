@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/mulesoft-labs/api-console-sources-resolver.svg?branch=master)](https://travis-ci.org/mulesoft-labs/api-console-sources-resolver)
 
+**PACKAGE MOVED**
+Moved to: https://www.npmjs.com/package/@api-components/api-console-sources-resolver
+
+Do not use this version in new projects.
+
 An npm module to download / copy Mulesoft's API console to local location.
 
 This module is mainly used in the [api-console-builder](https://github.com/mulesoft-labs/api-console-builder).
