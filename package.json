@@ -26,16 +26,14 @@
   },
   "homepage": "https://github.com/mulesoft-labs/api-console-sources-resolver#readme",
   "devDependencies": {
-    "@api-components/api-console-github-resolver": "^1.0.1",
+    "@api-components/api-console-github-resolver": "^1.0.4",
     "chai": "^3.5.0",
-    "eslint": "^4.19.1",
-    "eslint-config-google": "^0.9.1",
     "mocha": "^5.2.0"
   },
   "dependencies": {
     "fs-extra": "^3.0.0",
-    "unzip": "^0.1.11",
-    "winston": "3.1.0",
+    "unzipper": "^0.9.15",
+    "winston": "3.2.1",
     "tmp": "0.0.31"
   }
 }

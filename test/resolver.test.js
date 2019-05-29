@@ -4,14 +4,22 @@ const {ApiConsoleSources} = require('../lib/api-console-sources');
 const {ApiConsoleTransport} = require('@api-components/api-console-github-resolver');
 const assert = require('chai').assert;
 const fs = require('fs-extra');
+const winston = require('winston');
 
-const logger = {
-  error: function() {},
-  warn: function() {},
-  info: function() {},
-  log: function() {},
-  debug: function() {}
-};
+function createLogger() {
+  const format = winston.format.combine(
+    winston.format.colorize(),
+    winston.format.simple()
+  );
+  return winston.createLogger({
+    level: 'warning',
+    format,
+    exitOnError: false,
+    transports: [
+      new winston.transports.Console()
+    ]
+  });
+}
 
 const zipUrl = 'https://github.com/mulesoft/api-console/archive/5.0.0-preview.zip';
 
@@ -35,7 +43,7 @@ const githubTransport = {
     if (url.indexOf('http') === -1) {
       return fs.readFile('test/test.zip');
     }
-    const transport = new ApiConsoleTransport();
+    const transport = new ApiConsoleTransport(createLogger());
     return transport.get(url, {
       'user-agent': 'mulesoft-labs/api-console-sources-resolver'
     });
@@ -46,7 +54,7 @@ describe('sources-resolver', () => {
   describe('constructor', () => {
     it('Should construct object', function() {
       const sources = new ApiConsoleSources({
-        logger
+        logger: createLogger()
       },
         githubResolver, githubTransport);
       assert.isOk(sources);
@@ -56,7 +64,7 @@ describe('sources-resolver', () => {
       assert.throws(function() {
         new ApiConsoleSources({
           test: true
-        }, githubResolver, githubTransport, logger);
+        }, githubResolver, githubTransport, createLogger());
       });
     });
   });
@@ -69,10 +77,10 @@ describe('sources-resolver', () => {
       before(function() {
         options = {
           src: 'test/test.zip',
-          logger
+          logger: createLogger()
         };
         resolver = new ApiConsoleSources(options,
-          githubResolver, githubTransport, logger);
+          githubResolver, githubTransport, createLogger());
       });
 
       afterEach(function() {
@@ -107,10 +115,10 @@ describe('sources-resolver', () => {
       before(function() {
         options = {
           src: 'test/api-console',
-          logger
+          logger: createLogger()
         };
         resolver = new ApiConsoleSources(options,
-          githubResolver, githubTransport, logger);
+          githubResolver, githubTransport, createLogger());
       });
 
       afterEach(function() {
@@ -134,7 +142,7 @@ describe('sources-resolver', () => {
     const dest = 'test/build/';
     before(function() {
       resolver = new ApiConsoleSources({
-        logger
+        logger: createLogger()
       },
         githubResolver, githubTransport);
     });
@@ -159,7 +167,7 @@ describe('sources-resolver', () => {
     const dest = 'test/build/';
     before(function() {
       resolver = new ApiConsoleSources({
-        logger
+        logger: createLogger()
       },
         githubResolver, githubTransport);
     });
@@ -184,7 +192,7 @@ describe('sources-resolver', () => {
     const dest = 'test/build/';
     before(function() {
       resolver = new ApiConsoleSources({
-        logger
+        logger: createLogger()
       },
         githubResolver, githubTransport);
     });
@@ -235,7 +243,7 @@ describe('sources-resolver', () => {
 
     it('Should download latest release', function() {
       let resolver = new ApiConsoleSources({
-        logger
+        logger: createLogger()
       },
         githubResolver, githubTransport);
       resolver = makeStub(resolver);
@@ -246,7 +254,7 @@ describe('sources-resolver', () => {
     it('Should download tagged release', function() {
       let resolver = new ApiConsoleSources({
         tagName: 'v5.0.0',
-        logger
+        logger: createLogger()
       }, githubResolver, githubTransport);
       resolver = makeStub(resolver);
       resolver.sourcesTo();
@@ -256,7 +264,7 @@ describe('sources-resolver', () => {
     it('Should download from any URL', function() {
       let resolver = new ApiConsoleSources({
         src: zipUrl,
-        logger
+        logger: createLogger()
       }, githubResolver, githubTransport);
       resolver = makeStub(resolver);
       resolver.sourcesTo();
@@ -266,7 +274,7 @@ describe('sources-resolver', () => {
     it('Should download from any URL', function() {
       let resolver = new ApiConsoleSources({
         src: 'test/test.zip',
-        logger
+        logger: createLogger()
       }, githubResolver, githubTransport);
       resolver = makeStub(resolver);
       resolver.sourcesTo();
