@@ -1,13 +1,15 @@
 {
   "name": "@api-components/api-console-sources-resolver",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "A module to download Mulesoft's API console sources.",
-  "main": "main.js",
+  "main": "index.js",
+  "module": "main.js",
   "scripts": {
-    "test": "mocha 'test/*.test.js'"
+    "test": "mocha 'test/*.test.js'",
+    "test:watch": "mocha 'test/*.test.js' --watch"
   },
   "engines": {
-    "node": ">=6.5.0"
+    "node": ">=12.0.0"
   },
   "repository": {
     "type": "git",
@@ -26,14 +28,27 @@
   },
   "homepage": "https://github.com/mulesoft-labs/api-console-sources-resolver#readme",
   "devDependencies": {
-    "@api-components/api-console-github-resolver": "^1.0.4",
-    "chai": "^3.5.0",
-    "mocha": "^5.2.0"
+    "@api-components/api-console-github-resolver": "^2.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0",
+    "@advanced-rest-client/eslint-config": "^1.1.4",
+    "@advanced-rest-client/prettier-config": "^0.1.0",
+    "@commitlint/cli": "^8.3.4",
+    "@commitlint/config-conventional": "^8.3.4",
+    "husky": "^4.0.4",
+    "lint-staged": "^9.5.0"
   },
   "dependencies": {
-    "fs-extra": "^3.0.0",
-    "unzipper": "^0.9.15",
-    "winston": "3.2.1",
-    "tmp": "0.0.31"
+    "esm": "^3.2.25",
+    "fs-extra": "^8.1.0",
+    "tmp": "0.1.0",
+    "unzipper": "^0.10.5",
+    "winston": "3.2.1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

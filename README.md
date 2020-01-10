@@ -2,47 +2,45 @@
 
 [![Build Status](https://travis-ci.org/mulesoft-labs/api-console-sources-resolver.svg?branch=master)](https://travis-ci.org/mulesoft-labs/api-console-sources-resolver)
 
+A module that takes care of copying API Console's sources to a working dir from various sources like GitHub release, any URL, or local filesystem.
+
 ## API
 
-The module exposes 2 classes:
+The module exposes the following classes:
 
--   [ApiConsoleSources](lib/api-console-sources.js)
--   [ApiConsoleSourceOptions](lib/sources-options.js)
+-   [SourcesResolver](lib/SourcesResolver.js)
+-   [SourceOptions](lib/SourceOptions.js)
+-   [Cache](lib/Cache.js)
 
 ### Example
 
 ```javascript
-const {ApiConsoleSources} = require('api-console-sources-resolver');
-const {ApiConsoleTransport} = require('api-console-github-resolver');
-const {ApiConsoleGithubResolver} = require('api-console-github-resolver');
+import { SourcesResolver } from '@api-components/api-console-sources-resolver';
+import { Transport, GithubResolver } from '@api-components/api-console-github-resolver';
 
-const resolver = new ApiConsoleGithubResolver();
-const transport = new ApiConsoleTransport();
+const resolver = new GithubResolver();
+const transport = new Transport();
 
-const sources = new ApiConsoleSources({
-  tagVersion: 'v4.0.0'
+const sources = new SourcesResolver({
+  tagVersion: 'v6.0.0'
 }, resolver, transport, console);
 
-sources.sourcesTo('./temp/')
-.then(() => console.log('Ready'))
-.catch(cause => console.error(cause));
+await sources.sourcesTo('./temp/');
 ```
 
-### ApiConsoleSources
+### SourcesResolver
 
 A class responsible for getting API Console's correct sources and copy it to
 desired location.
 
 #### Constructor
 
-**opts** [ApiConsoleSourceOptions](lib/sources-options.js)
+**opts** [SourceOptions](lib/SourceOptions.js)
 
 **resolver** `Object` - A class used to resolve console's versions and download
 release information
 
 **transport** `Object` - Remote files downloader.
-
-**logger** `Object` - A logger class. **Deprecated** Use `opts.logger` instead.
 
 #### `sourcesTo(destination)`
 
@@ -55,19 +53,6 @@ file. This is controlled by the options.
 
 **destination** `String` - Local destination where copied or downloaded and
 extracted files will be placed.
-
-##### Returns `<Promise>`
-
-A promise resolved when operation succeeded.
-
-#### `moveConsoleToBower(workingDir)`
-
-Copies API console main files to a location in it's `bower_components` directory.
-This should be called when bower components were already installed.
-
-Console's main files will be copied to `{workingDir}/bower_components/api-console/`.
-
-**workingDir** `String` - Location of the API console sources.
 
 ##### Returns `<Promise>`
 

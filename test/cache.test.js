@@ -1,5 +1,5 @@
-const {ApiConsoleCache} = require('../lib/api-console-cache');
-const assert = require('chai').assert;
+const { Cache } = require('../');
+const { assert } = require('chai');
 const fs = require('fs-extra');
 const path = require('path');
 
@@ -11,11 +11,11 @@ const logger = {
   debug: function() {}
 };
 
-describe('console-cache', () => {
+describe('Cache', () => {
   describe('locateAppDir()', () => {
     let cache;
     before(function() {
-      cache = new ApiConsoleCache(logger);
+      cache = new Cache(logger);
     });
 
     it('Sets cacheFolder property', () => {
@@ -30,13 +30,13 @@ describe('console-cache', () => {
 
   describe('_tagToName()', () => {
     it('Replaces "v" in tag name', () => {
-      const cache = new ApiConsoleCache(logger);
+      const cache = new Cache(logger);
       const result = cache._tagToName('v5.0.0');
       assert.equal(result, '5.0.0');
     });
 
     it('Keeps snapshot name', () => {
-      const cache = new ApiConsoleCache(logger);
+      const cache = new Cache(logger);
       const result = cache._tagToName('5.0.0-preview');
       assert.equal(result, '5.0.0-preview');
     });
@@ -45,7 +45,7 @@ describe('console-cache', () => {
   describe('cachedPath()', () => {
     let cache;
     before(() => {
-      cache = new ApiConsoleCache(logger);
+      cache = new Cache(logger);
       const file = path.join(cache.cacheFolder, '5.0.0.zip');
       return fs.ensureFile(file);
     });
@@ -81,7 +81,7 @@ describe('console-cache', () => {
     let cache;
     const buf = Buffer.from('test');
     beforeEach(() => {
-      cache = new ApiConsoleCache(logger);
+      cache = new Cache(logger);
     });
 
     afterEach(() => {

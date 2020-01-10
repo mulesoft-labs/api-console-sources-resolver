@@ -1,15 +1,13 @@
-'use strict';
+const { SourceOptions } = require('../');
+const { assert } = require('chai');
 
-const {ApiConsoleSourceOptions} = require('../lib/sources-options.js');
-const assert = require('chai').assert;
-
-describe('sources-options', () => {
+describe('SourceOptions', () => {
   describe('validateOptions()', () => {
     let options;
 
     describe('_validateOptionsList()', () => {
       beforeEach(function() {
-        options = new ApiConsoleSourceOptions();
+        options = new SourceOptions();
       });
 
       it('Should pass known options', function() {
@@ -33,7 +31,7 @@ describe('sources-options', () => {
 
     describe('_validateSourceOptions()', () => {
       beforeEach(function() {
-        options = new ApiConsoleSourceOptions();
+        options = new SourceOptions();
       });
 
       it('Should fail for src and tagName', function() {
@@ -67,7 +65,7 @@ describe('sources-options', () => {
     let options;
 
     before(function() {
-      options = new ApiConsoleSourceOptions();
+      options = new SourceOptions();
     });
 
     it('Should not set src default option', function() {
